@@ -35,13 +35,17 @@ function drawCircle(context){
  */
 
 function drawDots(context){
-    var outlineCircleCenter = circleRadius + offset;
-    var x = outlineCircleCenter + circleRadius * Math.cos(0);
-    var y = outlineCircleCenter + circleRadius * Math.sin(0);
-    
     context.beginPath();
-    context.lineWidth = lineWidth;
     context.fillStyle = "black";
+    
+    for (var i=0; i < nrOfDots; i++) {
+    var angle = 2 * Math.PI / nrOfDots * i;
+    var outlineCircleCenter = circleRadius + offset;
+    var x = outlineCircleCenter + circleRadius * Math.cos(angle);
+    var y = outlineCircleCenter + circleRadius * Math.sin(angle);
+    
+    context.moveTo(x, y);
     context.arc(x, y, dotRadius, 0, 2 * Math.PI);
+}
     context.fill();
- }
+}
