@@ -1,10 +1,12 @@
-var nrOfDots = 12;
-var multiplier = 2;
+var nrOfDots = document.getElementById("dots");
+var multiplier = document.getElementById("multiplier");
 
 var circleRadius = 200;
 var dotRadius = 10;
 var lineWidth = 1;
 var offset = 50;
+
+var dotPositions = [];
 
 function draw(){
     var canvas = document.querySelector("canvas");
@@ -13,7 +15,7 @@ function draw(){
     context.beginPath();
     drawCircle(context);
     drawDots(context);
-    //drawLines(context);
+    drawLines(context);
 }
 
 /**
@@ -46,6 +48,30 @@ function drawDots(context){
     
     context.moveTo(x, y);
     context.arc(x, y, dotRadius, 0, 2 * Math.PI);
-}
+
+    dotPositions.push({
+        x: x,
+        y: y
+    });
+    }
     context.fill();
+}
+/**
+ * Draws the lines for this project.
+ * @param {CanvasRenderingContext2D} context
+ */
+
+function drawLines(context){
+    context.beginPath();
+    context.lineWidth = lineWidth;
+    context.strokeStyle = "black";
+    
+    for (var i=0; i < nrOfDots; i++){
+        var startingPoint = dotPositions[i];
+        var nextIndex = (i * multiplier) % nrOfDots;
+        var endPoint = dotPositions[nextIndex];
+        context.moveTo(startingPoint.x, startingPoint.y);
+        context.lineTo(endPoint.x, endPoint.y);
+    }
+    context.stroke();
 }
